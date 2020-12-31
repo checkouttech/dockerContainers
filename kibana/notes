@@ -1,0 +1,7 @@
+docker network  create myNetwork
+
+docker build -f Dockerfile_kibana -t learning_kibana .  --no-cache
+
+docker run -it --net myNetwork  -p 5601:5601  learning_kibana /bin/bash
+
+
