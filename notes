@@ -1,91 +1,121 @@
+Build an image 
+
+		docker build -t [IMAGE_NAME] .
+
+ 		With a different docker filename 
+
+    		docker build -f Dockerfile.example  -t km/docex .
+
+ 		without using cache 
+ 
+ 			docker build -f Dockerfile_kibana -t learning_kibana .  --no-cache
 
 
 
+List all images
+
+
+	docker images -f dangling=true
 
 
 
-
-Build Create an image 
-
- docker build -t [IMAGE_NAME] .
-
- docker build -t my-ubuntu-apache-webserver:0.1  .
-docker build  -t  myimage:0.1   .
-
- With a different filename 
-
-    docker build -f Dockerfile.example  -t km/docex .
-
-
-Details 
+Details  
 
 	docker inspect images-name 
 
 
-
- without cache  
-   docker build -t [IMAGE_NAME] .    --no-cache
-
-
+ 
 Search remote images 
 
-	docker search elasticsearch
+
+	Docker search images 
+
+		docker search elasticsearch
+
 
 
 Pull remote image without running 
 
-	docker pull image name 
-
-	pull a specific version of ubuntu image
-
-	$ docker pull ubuntu:12.04
+	docker pull image name:[Tag]
 
 
 
+History 
 
-
- Remove a container upon exit
-   docker run --rm -it  [IMAGE_NAME]l   /bin/bash
-
-
-
-
-
-
-Stop 
-	docker stop [CONTAINER_ID]
-	docker container stop es
-
-Pause 
-	docker pause ContainerID 
-	docker npause ContainerID
-
-
-
-Logs 
-   docker logs -f [CONTAINER_NAME/ID]
-
+	docker history IMAGE NAME/ID
 
 
 Remove Image 
 
-	docker rmi ImageID
 	docker rmi [options] IMAGE NAME/ID [IMAGE NAME/ID...]
 
 
-Remove Container 
 
-	 docker rm CONTAINER_ID
+
+Container 
+
+
+	Run container 
+
+
+	Run container and remove it upon exit 
+
+   		docker run --rm -it  [IMAGE_NAME]    /bin/bash
+
+	Pause 
+
+		docker container pause [CONTAINER_ID]
+
+
+   	Stop 
+
+		docker container stop [CONTAINER_ID]
+
+
+	Remove Container  
+
 	 	docker rm [options] CONTAINER ID/NAME [CONTAINER ID/NAME...]
 
 
-Clean up 
- docker system prune
+	Open terminal to an existing shell 
+
+
+		docker exec -it  container-id /bin/bash
+
+		docker start –attach <container name> 
+
+
+	Copy data from a container 
+
+		 docker cp [CONT-ID]:/opt/app/file ~/Download/from-container/
 
 
 
-Ports
-   specify a custom port
+
+Logs 
+   	
+   	docker logs -f [CONTAINER_NAME/ID]
+
+   	Print the last 100 lines of a container’s logs
+
+		docker container logs –tail 100 web
+
+
+Port mapping 
+
+ 
+   	specify a custom port
+
+   		-p HostPort:ContainerPort
+
+   	Random port 
+
+   		-P 
+
+   	List all ports of a container 
+
+
+   		docker port container name
 
 
 
@@ -93,34 +123,25 @@ Ports
 Network 
 
 
-	docker network ls 
+	Creating a network 
 
+   		docker network create [NETWORK_NAME]
 
+	Listing all the Docker networks 
 
+  	 	docker network ls
 
-   docker network create [NETWORK_NAME]
+	docker network inspect networkname 
 
-    docker network ls
- 	docker network inspect bridge
+	docker network connect my-network my-app
 
- 	docker network inspect networkname 
-
-
-History 
-
-	docker history ubuntu
-
-
-Docker Server Restart 
-
-	service docker restart
 
 
 Docker volume 
 
 	Listing all the Docker Volumes
 
-		docker volume list
+		docker volume list/ls
 
 	Creating a Docker Volume
 
@@ -134,29 +155,178 @@ Docker volume
 
 		sudo docker run −−mount source=<name of volume>,destination=<path of a directory in container> <image_name>
 
-
 	Deleting a Docker Volume
 
 		docker rm <name of volume>
 
+ 
 
-
-
- to know how much resources they are using, for that purpose we can use the command.
-
-$ docker stats
-
-
-
-Kill all running containers.
-
-Docker Cleanup
-	
-Container information
-	docker stats	
-
-List of al running containers
-	docker ps	
-	docker service ps devtest-service
+Details 
 
 	
+	All running containers memory/cpu consumption 
+
+
+		docker stats
+
+	Details of a container
+
+		docker inspect my-app
+
+
+	Get top running process in a container 
+
+		docker top a8f229f95ca74
+
+
+	Details of docker daemon 
+
+		docker info 
+
+
+	List all running containers
+
+		docker ps devtest-service
+
+
+
+
+
+
+Docker Server Restart 
+
+	service docker restart
+
+
+
+Docker details 
+
+	docker version --format '{{.Server.Version}}'
+
+	docker version --format '{{json .}}'
+ 
+
+
+
+
+Cleanup / Removing unused images, containers, and volumes 
+
+	docker system prune
+
+	docker system prune -a  # only containers and images . no networks 
+
+	docker volume prune
+
+	docker rmi $(docker images -a -q)
+
+	docker container prune # 	WARNING! This will remove all stopped containers
+
+	docker rm $(docker ps -a -q -f status=exited)   # remove all exited containers 
+
+	Delete all running and stopped containers
+
+		docker container rm -f $(docker ps -aq)
+
+
+Docker Compose
+
+	docker-compose up api  # Will only start the api service
+
+	docker-compose up  # Will start all the services
+
+	docker-compose build api # build api images before starting service 
+
+	docker-compose start	Start a service
+	
+	docker-compose stop	Stop a service
+
+
+	Run Docker Compose file: Docker-compose up -d
+
+	Start all services: Docker Compose up
+
+	Stop all services: Docker Compose down
+
+
+
+
+
+Docker commit to registry  
+
+	docker commit [ContainerID] [Repository[:Tag]
+
+	$ docker commit mycontainer1 rominirani/ubuntu-git
+
+
+Pushing the Image to the Docker Hub
+
+	$ docker push <yourusername>/ubuntu-git
+
+	docker tag my-repository/some-image:image-tag localhost:5000/my-repository/some-image:image-tag
+
+
+Setup local registry 
+
+
+	docker pull registry
+
+	starting a container named ‘localregistry’ based on the ‘registry’ image.
+
+	docker run -d -p 5000:5000 --name localregistry registry
+
+ 
+	docker push localhost:5000/alpine:latest
+ 
+
+
+Dive tool 
+
+	brew install dive
+
+	dive mywebserver
+
+	https://github.com/wagoodman/dive
+
+
+
+
+
+Using -i flag without -t 
+
+
+	docker run ubuntu printf "line1\nline2"  | docker run -i ubuntu grep line1  | docker run -i ubuntu sed 's/line1/lin3/'
+
+
+
+Backup / save volume on file 
+
+	save volume data 
+
+		docker run --rm --volumes-from dbstore -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /dbdata
+
+	save image 
+
+		docker save --output my-app.tar my-app:1.0
+
+
+
+Add user in build file 
+
+	RUN groupadd -r postgres && useradd --no-log-init -r -g postgres postgres
+
+	RUN useradd -md /data --key=UID_MIN=1000 --key=GID_MIN=1000 user
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
