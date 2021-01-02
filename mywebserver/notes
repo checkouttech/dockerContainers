@@ -1,0 +1,12 @@
+
+
+docker build -f mywebserver.Dockerfile -t mywebserver .
+
+docker run -d -p 80:80 --name mywebserver-container mywebserver
+
+ docker exec -it mywebserver-container /bin/bash
+
+docker rm   mywebserver-container
+
+
+
