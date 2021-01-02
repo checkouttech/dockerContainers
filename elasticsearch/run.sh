@@ -6,7 +6,8 @@ docker run --name es                         \
            -w  /home/newuser  \
            --net myNetwork   \
            --mount  source=myVolume,destination=/home/newuser/   \
-           learning_es_3  # /bin/bash 
+           --hostname es01.docker.local \
+           myelasticsearch /bin/bash 
 
            #-v  /tmp/f2:/home/newuser   \
            #-P                               \   randomly picks up any available port of host machine. Can be viewed using dockes ps -a or ports command

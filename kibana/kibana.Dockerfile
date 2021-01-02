@@ -105,7 +105,7 @@ WORKDIR /home/newuser
 #RUN  chown -R newuser /home/newuser 
 
 # Define default command.
-#CMD ["elasticsearch"]
+CMD ["kibana"]
 
 
 

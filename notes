@@ -92,11 +92,18 @@ Ports
 
 Network 
 
+
+	docker network ls 
+
+
+
+
    docker network create [NETWORK_NAME]
 
     docker network ls
  	docker network inspect bridge
 
+ 	docker network inspect networkname 
 
 
 History 
@@ -109,5 +116,47 @@ Docker Server Restart
 	service docker restart
 
 
+Docker volume 
+
+	Listing all the Docker Volumes
+
+		docker volume list
+
+	Creating a Docker Volume
+
+		docker volume create myVolume.
+
+	Inspecting a Docker Volume
+
+		docker volume inspect <volume_name>
+
+	Mounting Docker Volumes
+
+		sudo docker run −−mount source=<name of volume>,destination=<path of a directory in container> <image_name>
 
 
+	Deleting a Docker Volume
+
+		docker rm <name of volume>
+
+
+
+
+ to know how much resources they are using, for that purpose we can use the command.
+
+$ docker stats
+
+
+
+Kill all running containers.
+
+Docker Cleanup
+	
+Container information
+	docker stats	
+
+List of al running containers
+	docker ps	
+	docker service ps devtest-service
+
+	

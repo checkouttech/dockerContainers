@@ -84,6 +84,10 @@ ENV PATH $PATH:$ES_HOME/bin
 EXPOSE 9200
 EXPOSE 9300
 
+# Define mountable directories.
+#VOLUME ["/data"]
+
+
 ## give permission to entire elasticsearch setup directory
 RUN useradd newuser --create-home --shell /bin/bash  && \ 
     echo 'newuser:newpassword' | chpasswd && \
