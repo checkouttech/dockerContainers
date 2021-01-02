@@ -1,0 +1,41 @@
+version: "2.2"
+
+services:
+
+  elasticsearch:
+    image: myelasticsearch
+    container_name: myelasticsearch-container
+    restart: always
+    hostname: 'es01.docker.local'
+    ports:
+      - '9200:9200'
+      - '9300:9300'
+    volumes:
+      - myVolume:/home/newuser/
+    environment:
+      - discovery.type=single-node
+
+ 
+  kibana:
+    depends_on:
+      - elasticsearch
+    image: mykibana
+    container_name: mykibana-container
+    restart: always
+    ports:
+      - '5601:5601'
+    volumes:
+      - myVolume:/home/newuser/
+    environment:
+      ELASTICSEARCH_URL: http://es01:9200
+      ELASTICSEARCH_HOSTS: http://es01:9200 
+volumes: 
+  myVolume:
+
+
+networks:
+  myNetwork:
+
+
+
+
