@@ -1,3 +1,81 @@
+Overview  -  https://www.youtube.com/watch?v=Cw9QoeAHjIQ
+    
+
+Commands : 
+
+# Start/Apply pods and services using config file 
+
+    kubectl apply -f example.yml
+
+
+# List resources in PS format
+ 
+    kubectl get all
+    kubectl get deployments
+    kubectl get nodes
+    kubectl get pods
+    kubectl get services
+
+    # single service or pod 
+     kubectl get services service-name -o=yaml
+    
+    # other output format 
+      kubectl get services -o [ yaml / wide / json ] 
+
+
+# Describe resources 
+
+    kubectl describe - show detailed information about a resource
+
+
+# kubectl logs - print the logs from a container in a pod
+
+# Execute command on a container in a pod 
+
+    kubectl exec - execute a command on a container in a pod
+
+
+# Delete pods and services 
+
+    kubectl delete  pod-1  service-1 pod-2
+    kubectl delete pod/pod-kibana pod/pod-elasticsearch service/mykibana-service service/myelasticsearch-service 
+
+# Get pod or service details 
+
+    kubectl describe pod/pod-elasticsearch
+
+
+# List PersistentVolumes sorted by capacity
+    kubectl get pv
+
+
+
+# Other examples: 
+  # List a single replication controller with specified NAME in ps output format.
+  kubectl get replicationcontroller web
+
+  # List deployments in JSON output format, in the "v1" version of the "apps" API group:
+  kubectl get deployments.v1.apps -o json
+
+  # List a pod identified by type and name specified in "pod.yaml" in JSON output format.
+  kubectl get -f pod.yaml -o json
+
+  # List resources from a directory with kustomization.yaml - e.g. dir/kustomization.yaml.
+  kubectl get -k dir/
+
+  # Return only the phase value of the specified pod.
+  kubectl get -o template pod/web-pod-13je7 --template={{.status.phase}}
+
+  # List resource information in custom columns.
+  kubectl get pod test-pod -o custom-columns=CONTAINER:.spec.containers[0].name,IMAGE:.spec.containers[0].image
+
+  # List all replication controllers and services together in ps output format.
+  kubectl get rc,services
+
+  # List one or more resources by their type and names.
+  kubectl get rc/web service/frontend pods/web-pod-13je7
+
+
 
 
 
