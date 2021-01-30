@@ -8,12 +8,10 @@ Build an image
 
  		without using cache 
  
- 			docker build -f Dockerfile_kibana -t learning_kibana .  --no-cache
-
+            docker build -f kibana.Dockerfile -t mykibana .  --no-cache
 
 
 List all images
-
 
 	docker images -f dangling=true
 

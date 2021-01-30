@@ -4,3 +4,8 @@ docker build -f kibana.Dockerfile -t mykibana .  --no-cache
 
 docker run -it --net myNetwork  -p 5601:5601  mykibana /bin/bash
 
+
+# if getting error message about resource already exists  
+
+ curl -X DELETE http://localhost:9200/.kibana*
+
