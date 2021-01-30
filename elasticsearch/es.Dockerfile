@@ -87,6 +87,9 @@ EXPOSE 9300
 # Define mountable directories.
 #VOLUME ["/data"]
 
+# Create the non-root user up front
+#RUN adduser --system --group --no-create-home newuser
+
 
 ## give permission to entire elasticsearch setup directory
 RUN useradd newuser --create-home --shell /bin/bash  && \ 
