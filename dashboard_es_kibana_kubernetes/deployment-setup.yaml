@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-mywebserver
+  labels:
+    app: myapp-mywebserver
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: myapp-mywebserver
+    # hostname: "es01-docker-local"
+    
+  template:
+    metadata:
+      labels:
+        app: myapp-mywebserver
+    spec:
+      containers:
+      - name: myapp-mywebserver-container 
+        image: mywebserver
+        imagePullPolicy: IfNotPresent
+
+        #volumeMounts:
+        #- name: my-volume
+        #  mountPath: /home/newuser
+
+        ports:
+        - containerPort: 9000
+          # name: api
+
+        # command
+        # workingDir
+        # env 
+
+
+---
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: myapp-mywebserver-service
+  labels:
+    app: myapp-mywebserver
+spec:
+  type: NodePort
+  ports:
+    - port: 9000
+      targetPort: 9000
+      nodePort: 30020
+      
+  selector:
+    app: myapp-mywebserver
+
+
+

@@ -4,6 +4,7 @@ metadata:
   name: pod-elasticsearch
   labels:
       app: myapp
+      # type: front-end
 spec:
   hostname: "es01-docker-local"
 
@@ -23,7 +24,7 @@ spec:
   volumes:
     - name: my-volume
       emptyDir: {}
-
+      # emptyDir: /home/newuser/
 ---
 
 apiVersion: v1
@@ -42,7 +43,8 @@ spec:
           nodePort: 30015
     selector:
         app: myapp
-
+        #type: front-end
+          
 
 ---
 apiVersion: v1
@@ -98,8 +100,3 @@ spec:
           nodePort: 30016
     selector:
         app: myapp
-
-
-
-
-
