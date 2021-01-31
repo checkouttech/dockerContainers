@@ -1,0 +1,17 @@
+
+- Exercise 
+-- Create deployment with 1 es pod and 1 kibana pod 
+-- Add 1 more es pod 
+-- stop original es pod 
+-- stop original kibana pod 
+
+
+- Have shared network space between all kibana pod and all es pod 
+
+- Also have one shared network space between all pods 
+
+
+
+
+
+
