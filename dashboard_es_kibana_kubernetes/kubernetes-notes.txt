@@ -1,7 +1,24 @@
 Overview  -  https://www.youtube.com/watch?v=Cw9QoeAHjIQ
-    
+
+# create from docker compose file 
+  
+  kompose convert         
+
+
 
 Commands : 
+
+
+# Get cluster status 
+
+  # kubectl  cluster-info 
+
+  # alternatively start proxy and see it command line 
+
+  ## kubectl proxy 
+
+  ## browser :  http://localhost:8001/api/v1/namespaces/kube-system/services/
+
 
 # Start/Apply pods and services using config file 
 
@@ -77,10 +94,44 @@ Commands :
 
 
 
+# Deployments 
+
+  # deploy webserver 
+  kubectl run --image nginx webser 
+
+  # get details of deployment 
+  kubectl get deploy 
+  kubectl describe deploy webserver 
+
+  # port forward to local desktop   
+  kubectl port-forward webserver 5000:80
+
+
+  # To expose your application and make it accessible from the outside the cluster
+  
+  kubectl expose deployment/bootcamp --type="LoadBalancer" --port 8080
+  kubectl expose deploy webserver --port 80 --type NodePort 
+  kubectl expose deployment/kubernetes-bootcamp --type="NodePort" --port 8080
+  kubectl expose deployment hello-world --type=LoadBalancer --name=my-service
 
 
 
+  
 
+  # scale them 
+
+  kubectl scale deployments/bootcamp --replicas=4
+
+
+
+# Deployment 
+
+kubectl apply -f deployment.yaml
+kubectl get deployment
+
+  # stop / delete 
+
+  kubectl scale --replicas=0 deployment.apps/hello-world
 
 
 
