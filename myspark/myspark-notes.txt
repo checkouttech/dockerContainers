@@ -1,0 +1,12 @@
+docker network  create myNetwork
+
+docker build -f spark.Dockerfile -t myspark .  --no-cache
+
+#docker run -it --net myNetwork  -p 5601:5601  myelasticsearch /bin/bash
+
+docker run -it -v  /Users/kapilmahant/workspace/dockers/spark:/home/newuser   myspark /bin/bash
+
+docker run -it --mount type=bind,source=$PWD,target=/home/newuser myspark /bin/bash
+
+
+
